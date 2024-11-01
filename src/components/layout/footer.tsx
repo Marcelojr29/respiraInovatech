@@ -1,8 +1,12 @@
+import { FC } from "react";
 import { Input } from "@/components/ui/input";
+import InstagramIcon from "../../assets/icons/instagram.png";
+import GithubIcon from "../../assets/icons/github.png";
+import LinkedInIcon from "../../assets/icons/linkedin.png";
 
-export function Footer() {
+export const Footer: FC = () => {
 	return (
-		<footer className="bg-gradient-to-r from-green-200 to-green-300 py-8 mt-auto">
+		<footer className="bg-custom-gradient py-8 mt-auto">
 			<div className="container mx-auto flex flex-col lg:flex-row justify-between items-center lg:items-start space-y-6 lg:space-y-0">
 				{/* Informações */}
 				<div className="text-center lg:text-left space-y-2">
@@ -20,33 +24,21 @@ export function Footer() {
 							href="#instagram"
 							className="flex items-center space-x-2 text-white"
 						>
-							<img
-								className="w-6 h-6"
-								src="/src/assets/icons/instagram-icon.png"
-								alt="Instagram"
-							/>
+							<img className="w-6 h-6" src={InstagramIcon} alt="Instagram" />
 							<span>Instagram</span>
 						</a>
 						<a
 							href="#github"
 							className="flex items-center space-x-2 text-white"
 						>
-							<img
-								className="w-6 h-6"
-								src="./src/assets/images/"
-								alt="GitHub"
-							/>
+							<img className="w-6 h-6" src={GithubIcon} alt="GitHub" />
 							<span>GitHub</span>
 						</a>
 						<a
 							href="#linkedin"
 							className="flex items-center space-x-2 text-white"
 						>
-							<img
-								className="w-6 h-6"
-								src="/src/assets/icons/linkedin-icon.png"
-								alt="LinkedIn"
-							/>
+							<img className="w-6 h-6" src={LinkedInIcon} alt="LinkedIn" />
 							<span>LinkedIn</span>
 						</a>
 					</div>
@@ -57,15 +49,15 @@ export function Footer() {
 					<h2 className="text-lg font-bold text-white">Lorem</h2>
 					<div className="flex items-center space-x-2">
 						<Input type="text" placeholder="Lorem Lorem" className="bg-white" />
-						<button className="bg-yellow-500 text-white font-semibold px-4 py-2 rounded">
+						<button className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded transition-colors">
 							Enviar
 						</button>
 					</div>
 					<p className="text-xs text-white mt-2">
-						© by RESPIRAL_INOV@TECH_Fametro
+						© by RESPIRAL_INOV em TECH_Fametro
 					</p>
 				</div>
 			</div>
 		</footer>
 	);
-}
+};

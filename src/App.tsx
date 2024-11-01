@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Home } from "./Pages/home/home";
 
 export function App() {
