@@ -1,11 +1,12 @@
-import { Home } from "./components/pages/home/home";
-import { Footer } from "./components/pages/footer/footer";
+import React from "react";
+import { Home } from "./Pages/home/home";
 
 export function App() {
-  return (
-   <header>
-    <Home />
-    <Footer />
-   </header>
-  )
+	return (
+		<div>
+			<header>
+				<Home />
+			</header>
+		</div>
+	);
 }
