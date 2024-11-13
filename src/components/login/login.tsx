@@ -1,241 +1,121 @@
-import styled from 'styled-components';
+import { useState } from "react";
 
-const Login = () => {
-  return (
-    <StyledWrapper>
-      <div className="wrapper bg-custom-gradient">
-        <div className="card-switch">
-          <label className="switch">
-            <input type="checkbox" className="toggle" />
-            <span className="slider" />
-            <span className="card-side" />
-            <div className="flip-card__inner">
-              <div className="flip-card__front">
-                <div className="title">Login</div>
-                <form className="flip-card__form" action="">
-                  <input className="flip-card__input" name="email" placeholder="Email" type="email" />
-                  <input className="flip-card__input" name="password" placeholder="Senha" type="password" />
-                  <button className="flip-card__btn">Entrar</button>
-                </form>
-              </div>
-              <div className="flip-card__back">
-                <div className="title">Cadastro</div>
-                <form className="flip-card__form" action="">
-                  <input className="flip-card__input" placeholder="Nome" type="name" />
-                  <input className="flip-card__input" name="email" placeholder="Email" type="email" />
-                  <input className="flip-card__input" name="password" placeholder="Senha" type="password" />
-                  <button className="flip-card__btn">Confirmar</button>
-                </form>
-              </div>
-            </div>
-          </label>
-        </div>   
-      </div>
-    </StyledWrapper>
-  );
-}
+const Login: React.FC = () => {
+	const [isRegister, setIsRegister] = useState<boolean>(false);
 
-const StyledWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Ocupa toda a altura da tela */
-  width: 100%; /* Ocupa toda a largura da tela */
+	const toggleForm = () => setIsRegister((prev) => !prev);
 
-  .wrapper {
-    --input-focus: #2d8cf0;
-    --font-color: #323232;
-    --font-color-sub: #666;
-    --bg-color: #fff;
-    --bg-color-alt: #666;
-    --main-color: #323232;
-      
-  }
-  /* switch card */
-  .switch {
-    transform: translateY(-200px);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    width: 50px;
-    height: 20px;
-  }
+	return (
+		<div className="flex justify-center items-center min-h-screen bg-[rgb(217,248,217)]">
+			<div
+				className="relative bg-white rounded-lg shadow-lg p-6"
+				style={{ perspective: "1000px" }}
+			>
+				{/* Título Dinâmico com Espaçamento Acima */}
+				<h2 className="text-3xl font-bold text-center text-gray-800 mb-6 mt-4">
+					{isRegister ? "Sign up" : "Log in"}
+				</h2>
 
-  .card-side::before {
-    position: absolute;
-    content: 'Login';
-    left: -70px;
-    top: 0;
-    width: 100px;
-    text-decoration: underline;
-    color: var(--font-color);
-    font-weight: 600;
-  }
+				{/* Switch Toggle para Alternância entre Login e Cadastro */}
+				<div className="flex flex-col items-center gap-4 mb-8">
+					<label className="relative flex items-center">
+						<input
+							type="checkbox"
+							checked={isRegister}
+							onChange={toggleForm}
+							className="sr-only"
+						/>
+						<span className="block w-12 h-6 bg-gray-300 rounded-full cursor-pointer"></span>
+						<span
+							className={`absolute left-0 w-6 h-6 bg-white rounded-full border-2 border-gray-700 transform transition-transform duration-300 ${
+								isRegister ? "translate-x-6" : ""
+							}`}
+						></span>
+					</label>
+					<div className="relative text-lg font-semibold text-gray-700">
+						<span
+							className={`absolute -left-20 ${!isRegister ? "underline" : ""}`}
+						>
+							Log in
+						</span>
+						<span
+							className={`absolute -right-20 ${isRegister ? "underline" : ""}`}
+						>
+							Sign up
+						</span>
+					</div>
+				</div>
 
-  .card-side::after {
-    position: absolute;
-    content: 'Cadastro';
-    left: 70px;
-    top: 0;
-    width: 100px;
-    text-decoration: none;
-    color: var(--font-color);
-    font-weight: 600;
-  }
+				{/* Flip Card para Alternância de Formulários */}
+				<div
+					className={`relative w-72 h-80 transition-transform duration-700 transform ${
+						isRegister ? "rotate-y-180" : ""
+					}`}
+					style={{ transformStyle: "preserve-3d" }}
+				>
+					{/* Lado Frontal - Login */}
+					<div
+						className="absolute inset-0 flex flex-col items-center justify-center bg-gray-200 rounded-lg shadow-md p-4"
+						style={{ backfaceVisibility: "hidden", transform: "rotateY(0deg)" }}
+					>
+						<form className="flex flex-col items-center gap-4 w-full">
+							<input
+								type="email"
+								placeholder="Email"
+								className="w-60 p-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500 bg-white text-gray-900"
+							/>
+							<input
+								type="password"
+								placeholder="Password"
+								className="w-60 p-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500 bg-white text-gray-900"
+							/>
+							<button
+								type="submit"
+								className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded transition-colors"
+							>
+								Let`s go!
+							</button>
+						</form>
+					</div>
 
-  .toggle {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  .slider {
-    box-sizing: border-box;
-    border-radius: 5px;
-    border: 2px solid var(--main-color);
-    box-shadow: 4px 4px var(--main-color);
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--bg-colorcolor);
-    transition: 0.3s;
-  }
-
-  .slider:before {
-    box-sizing: border-box;
-    position: absolute;
-    content: "";
-    height: 20px;
-    width: 20px;
-    border: 2px solid var(--main-color);
-    border-radius: 5px;
-    left: -2px;
-    bottom: 2px;
-    background-color: var(--bg-color);
-    box-shadow: 0 3px 0 var(--main-color);
-    transition: 0.3s;
-  }
-
-  .toggle:checked + .slider {
-    background-color: var(--input-focus);
-  }
-
-  .toggle:checked + .slider:before {
-    transform: translateX(30px);
-  }
-
-  .toggle:checked ~ .card-side:before {
-    text-decoration: none;
-  }
-
-  .toggle:checked ~ .card-side:after {
-    text-decoration: underline;
-  }
-
-  /* card */ 
-
-  .flip-card__inner {
-    width: 300px;
-    height: 350px;
-    position: relative;
-    background-color: transparent;
-    perspective: 1000px;
-      /* width: 100%;
-      height: 100%; */
-    text-align: center;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
-  }
-
-  .toggle:checked ~ .flip-card__inner {
-    transform: rotateY(180deg);
-  }
-
-  .toggle:checked ~ .flip-card__front {
-    box-shadow: none;
-  }
-
-  .flip-card__front, .flip-card__back {
-    padding: 20px;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    background: linear-gradient(115deg, rgba(123,154,79,1) 0%, rgba(1,101,62,1) 100%);;
-    gap: 20px;
-    border-radius: 5px;
-    border: 2px solid var(--main-color);
-    box-shadow: 4px 4px var(--main-color);
-  }
-
-  .flip-card__back {
-    width: 100%;
-    transform: rotateY(180deg);
-  }
-
-  .flip-card__form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .title {
-    margin: 20px 0 20px 0;
-    font-size: 25px;
-    font-weight: 900;
-    text-align: center;
-    color: #fff;
-  }
-
-  .flip-card__input {
-    width: 250px;
-    height: 40px;
-    border-radius: 5px;
-    border: 2px solid var(--main-color);
-    background-color: var(--bg-color);
-    box-shadow: 4px 4px var(--main-color);
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--font-color);
-    padding: 5px 10px;
-    outline: none;
-  }
-
-  .flip-card__input::placeholder {
-    color: var(--font-color-sub);
-    opacity: 0.8;
-  }
-
-  .flip-card__input:focus {
-    border: 2px solid var(--input-focus);
-  }
-
-  .flip-card__btn:active, .button-confirm:active {
-    box-shadow: 0px 0px var(--main-color);
-    transform: translate(3px, 3px);
-  }
-
-  .flip-card__btn {
-    margin: 20px 0 20px 0;
-    width: 120px;
-    height: 40px;
-    border-radius: 5px;
-    border: 2px solid var(--main-color);
-    background-color: var(--bg-color);
-    box-shadow: 4px 4px var(--main-color);
-    font-size: 17px;
-    font-weight: 600;
-    color: linear-gradient(90deg, rgba(123,154,79,1) 0%, rgba(1,101,62,1) 100%);
-    cursor: pointer;
-  }`;
+					{/* Lado Traseiro - Sign up */}
+					<div
+						className="absolute inset-0 flex flex-col items-center justify-center bg-gray-200 rounded-lg shadow-md p-4 transform rotate-y-180"
+						style={{
+							backfaceVisibility: "hidden",
+							transformStyle: "preserve-3d",
+						}}
+					>
+						<form className="flex flex-col items-center gap-4 w-full">
+							{isRegister && (
+								<input
+									type="text"
+									placeholder="Name"
+									className="w-60 p-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500 bg-white text-gray-900"
+								/>
+							)}
+							<input
+								type="email"
+								placeholder="Email"
+								className="w-60 p-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500 bg-white text-gray-900"
+							/>
+							<input
+								type="password"
+								placeholder="Password"
+								className="w-60 p-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500 bg-white text-gray-900"
+							/>
+							<button
+								type="submit"
+								className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded transition-colors"
+							>
+								{isRegister ? "Confirm!" : "Confirm!"}
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
 
 export default Login;

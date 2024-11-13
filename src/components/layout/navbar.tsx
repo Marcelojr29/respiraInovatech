@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -13,6 +14,7 @@ export function Navbar() {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [showButton, setShowButton] = useState(false);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const navigate = useNavigate(); // Para navegação
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -29,6 +31,10 @@ export function Navbar() {
 
 	const scrollToTop = () => {
 		window.scrollTo({ top: 0, behavior: "smooth" });
+	};
+
+	const goToLogin = () => {
+		navigate("/login"); // Redireciona para a página de login
 	};
 
 	return (
@@ -51,22 +57,28 @@ export function Navbar() {
 				<div className="hidden lg:flex space-x-12 text-2xl font-semibold text-white">
 					<a
 						href="#Home"
-						className="text-white hover:text-gray-400 transition-colors"
+						className="text-white hover:text-gray-200 transition-colors"
 					>
 						Home
 					</a>
 					<a
 						href="#About"
-						className="text-white hover:text-gray-400 transition-colors"
+						className="text-white hover:text-gray-200 transition-colors"
 					>
 						About
 					</a>
 					<a
 						href="#Features"
-						className="text-white hover:text-gray-400 transition-colors"
+						className="text-white hover:text-gray-200 transition-colors"
 					>
 						Features
 					</a>
+					<Button
+						onClick={goToLogin}
+						className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded transition-colors"
+					>
+						Login
+					</Button>
 				</div>
 
 				{/* Menu Mobile */}
@@ -96,7 +108,7 @@ export function Navbar() {
 						<DropdownMenuItem onSelect={() => setIsMenuOpen(false)}>
 							<a
 								href="#Home"
-								className="block text-white hover:text-gray-400 transition-colors"
+								className="block text-white hover:text-gray-200 transition-colors"
 							>
 								Home
 							</a>
@@ -104,7 +116,7 @@ export function Navbar() {
 						<DropdownMenuItem onSelect={() => setIsMenuOpen(false)}>
 							<a
 								href="#About"
-								className="block text-white hover:text-gray-400 transition-colors"
+								className="block text-white hover:text-gray-200 transition-colors"
 							>
 								About
 							</a>
@@ -112,10 +124,20 @@ export function Navbar() {
 						<DropdownMenuItem onSelect={() => setIsMenuOpen(false)}>
 							<a
 								href="#Contact"
-								className="block text-white hover:text-gray-400 transition-colors"
+								className="block text-white hover:text-gray-200 transition-colors"
 							>
 								Contact
 							</a>
+						</DropdownMenuItem>
+						<DropdownMenuItem
+							onSelect={() => {
+								setIsMenuOpen(false);
+								goToLogin();
+							}}
+						>
+							<span className="block text-white hover:text-gray-200 transition-colors">
+								Login
+							</span>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
