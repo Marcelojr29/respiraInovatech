@@ -9,7 +9,7 @@ export function Home() {
 			<main className="flex-grow p-4 pt-20 flex items-start justify-center">
 				<CustomCarousel />
 			</main>
-			<div className="mt-auto">
+			<div className="mt-40">
 				<Footer />
 			</div>
 		</>
