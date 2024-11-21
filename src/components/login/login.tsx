@@ -11,18 +11,22 @@ const LoginComponent: React.FC = () => {
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
+		console.log(event)
 
-		const endpoint = isRegister ? "/api/register" : "/api/login";
+		const endpoint = isRegister ? "/register" : "/login";
 		const body = isRegister
 		? { name, email, password }
 		: { email, password };
 
 		try {
-			const response = await fetch(endpoint, {
+			console.log(endpoint)
+			const response = await fetch('http://localhost:3000/api/auth' + endpoint, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(body),
 			});
+
+			console.log(response)
 
 			const data = await response.json();
 			setMessage(data.message || "Success");
