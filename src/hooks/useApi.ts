@@ -5,7 +5,7 @@ const useApi = () => {
     const { token } = useAuth();
 
     const api = axios.create({
-        baseURL: 'http://localhost:5000/api',
+        baseURL: 'http://localhost:3000/',
         headers: {
             Authorization: `Bearer ${token}`,
         },
