@@ -1,15 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { useMapApi } from "@/hooks/useMap";
 
-// Configuração de posição central do mapa
 const MAP_CENTER_COORDINATES: LatLngExpression = [
 	-3.0974099776093005, -60.02330371104108,
 ];
 const MAP_ZOOM_LEVEL = 13;
 
 const MapSlide: React.FC = () => {
+	const { getAllSensors } = useMapApi();
+	const [sensors, setSensors] = useState<any[]>([]);
+
+	useEffect(() => {
+		const fetchSensors = async () => {
+			try {
+				const response = await getAllSensors();
+				setSensors(response.data);
+			} catch (error) {
+				console.error("Erro ao buscar sensores:", error);
+			}
+		};
+
+		fetchSensors();
+	}, []);
+
 	return (
 		<div className="w-full h-full">
 			<MapContainer
@@ -22,9 +38,14 @@ const MapSlide: React.FC = () => {
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 				/>
-				<Marker position={MAP_CENTER_COORDINATES}>
-					<Popup>Aumento de CO₂ Aqui!</Popup>
-				</Marker>
+				{sensors.map((sensor) => (
+					<Marker
+						key={sensor.id}
+						position={[sensor.latitude, sensor.longitude]}
+					>
+						<Popup>{`Sensor: ${sensor.name}, CO2 Level: ${sensor.co2_level}`}</Popup>
+					</Marker>
+				))}
 			</MapContainer>
 		</div>
 	);

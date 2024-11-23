@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import "chart.js/auto";
+import { useChartApi } from "@/hooks/useGraphic";
 
-// Configurações da API para Rio de Janeiro
-const CITY = "Rio de Janeiro";
-const PARAMETER = "co2";
-const API_URL = `https://api.openaq.org/v2/latest?city=${CITY}&parameter=${PARAMETER}`;
-
-// Tipagem para os dados do gráfico
 interface ChartData {
 	labels: string[];
 	datasets: {
@@ -17,81 +12,78 @@ interface ChartData {
 		borderColor: string;
 		pointBackgroundColor: string;
 		tension: number;
+		backgroundColor?: string;
 	}[];
 }
 
-// Função para buscar dados de CO₂ da API
-const fetchCO2DataFromAPI = async (): Promise<number> => {
-	try {
-		const response = await fetch(API_URL);
-		const data = await response.json();
-
-		// Verifica se existe dado de CO₂ e retorna o valor
-		const co2Value = data.results[0]?.measurements[0]?.value;
-		return co2Value || 0; // Retorna 0 caso não haja dados de CO₂
-	} catch (error) {
-		console.error("Erro ao buscar dados de CO₂:", error);
-		return 0;
-	}
-};
-
 const ChartSlide: React.FC = () => {
-	// Estado para armazenar dados do gráfico
+	const { getCO2Levels } = useChartApi();
 	const [chartData, setChartData] = useState<ChartData>({
 		labels: [],
 		datasets: [
 			{
-				label: "Variação de CO₂ no Rio de Janeiro (ppm)",
+				label: "Variação de CO₂ em Manaus (ppm)",
 				data: [],
-				fill: false,
-				borderColor: "rgb(75, 192, 192)",
-				pointBackgroundColor: "rgb(75, 192, 192)",
-				tension: 0.1,
+				fill: true,
+				borderColor: "rgba(75, 192, 192, 1)",
+				pointBackgroundColor: "rgba(75, 192, 192, 1)",
+				tension: 0.4,
+				backgroundColor: "rgba(75, 192, 192, 0.2)",
 			},
 		],
 	});
 
-	// Função para atualizar o estado do gráfico com novos dados
 	const updateChartData = async () => {
-		const newCO2Level = await fetchCO2DataFromAPI();
-		const currentTimeLabel = new Date().toLocaleTimeString();
+		try {
+			const response = await getCO2Levels();
+			const newCO2Level = response.data[0]?.measurements[0]?.value || 0;
+			const currentTimeLabel = new Date().toLocaleTimeString();
 
-		setChartData((prevData) => {
-			const updatedLabels = [...prevData.labels, currentTimeLabel].slice(-10); // Mantém últimos 10 pontos
-			const updatedData = [...prevData.datasets[0].data, newCO2Level].slice(
-				-10
-			);
+			setChartData((prevData) => {
+				const updatedLabels = [...prevData.labels, currentTimeLabel].slice(-10);
+				const updatedData = [...prevData.datasets[0].data, newCO2Level].slice(
+					-10
+				);
 
-			return {
-				...prevData,
-				labels: updatedLabels,
-				datasets: [
-					{
-						...prevData.datasets[0],
-						data: updatedData,
-					},
-				],
-			};
-		});
+				return {
+					...prevData,
+					labels: updatedLabels,
+					datasets: [
+						{
+							...prevData.datasets[0],
+							data: updatedData,
+						},
+					],
+				};
+			});
+		} catch (error) {
+			console.error("Erro ao buscar dados de CO₂:", error);
+		}
 	};
 
 	useEffect(() => {
-		// Atualiza os dados do gráfico a cada 2 minutos
 		const intervalId = setInterval(updateChartData, 120000);
-		updateChartData(); // Atualiza imediatamente ao montar o componente
+		updateChartData();
 
-		return () => clearInterval(intervalId); // Limpa o intervalo ao desmontar
+		return () => clearInterval(intervalId);
 	}, []);
 
-	// Opções de configuração do gráfico
 	const chartOptions = {
 		responsive: true,
 		maintainAspectRatio: false,
 		plugins: {
 			legend: {
 				labels: {
-					color: "#666", // Cor mais clara para a legenda
+					color: "#333",
+					font: {
+						size: 14,
+					},
 				},
+			},
+			tooltip: {
+				backgroundColor: "rgba(0, 0, 0, 0.7)",
+				titleColor: "#fff",
+				bodyColor: "#fff",
 			},
 		},
 		scales: {
@@ -99,25 +91,46 @@ const ChartSlide: React.FC = () => {
 				beginAtZero: true,
 				grace: "10%",
 				ticks: {
-					color: "#666", // Cor mais clara para os valores do eixo Y
+					color: "#333",
+					font: {
+						size: 12,
+					},
+					callback: function (value: number | string) {
+						if (typeof value === "number") {
+							if (value <= 400) {
+								return `${value} ppm (Seguro)`;
+							} else if (value <= 1000) {
+								return `${value} ppm (Moderado)`;
+							} else {
+								return `${value} ppm (Perigoso)`;
+							}
+						}
+						return value;
+					},
 				},
 				grid: {
-					color: "#e0e0e0", // Cor mais clara para as linhas de grade
+					color: "#e0e0e0",
 				},
 			},
 			x: {
 				ticks: {
-					color: "#666", // Cor mais clara para os valores do eixo X
+					color: "#333",
+					font: {
+						size: 12,
+					},
 				},
 				grid: {
-					color: "#e0e0e0", // Cor mais clara para as linhas de grade
+					color: "#e0e0e0",
 				},
 			},
 		},
 	};
 
 	return (
-		<div className="w-full h-full">
+		<div className="w-full h-full p-4 bg-white rounded-lg shadow-lg">
+			<h2 className="text-xl font-semibold text-gray-700 mb-4">
+				Medição de CO₂ em Manaus
+			</h2>
 			<Line data={chartData} options={chartOptions} className="w-full h-full" />
 		</div>
 	);

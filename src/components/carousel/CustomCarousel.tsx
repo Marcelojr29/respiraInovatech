@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 import MapSlide from "./MapSlide";
 import ChartSlide from "./ChartSlide";
-import LoremSlide from "./LoremSlide";
+import LoremSlide from "./AlertSlide";
 
 const CustomCarousel: React.FC = () => {
 	const sliderSettings = {
@@ -14,7 +14,7 @@ const CustomCarousel: React.FC = () => {
 		slidesToShow: 1,
 		slidesToScroll: 1,
 		arrows: true,
-		dots: false, // Remover os pontos de navegação
+		dots: false, 
 		nextArrow: (
 			<button
 				className="custom-arrow bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg hover:bg-blue-700 transition-colors"
@@ -40,7 +40,6 @@ const CustomCarousel: React.FC = () => {
 			<Slider {...sliderSettings}>
 				<div className="flex justify-center items-center h-[400px] w-full">
 					{" "}
-					{/* Ajuste de altura para remover espaço vazio */}
 					<MapSlide />
 				</div>
 				<div className="flex justify-center items-center h-[400px] w-full">
