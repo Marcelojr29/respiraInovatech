@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import MapSlide from '@/components/carousel/MapSlide';
-import { LatLngExpression, LatLngTuple } from 'leaflet';
+import { LatLngTuple } from 'leaflet';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import useApi from '@/hooks/useApi';
