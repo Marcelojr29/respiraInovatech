@@ -12,7 +12,7 @@ export const Footer: FC = () => {
 				<div className="text-center lg:text-left space-y-2">
 					<h2 className="text-lg font-bold text-white">Informations</h2>
 					<p className="text-white">Fametro</p>
-					<p className="text-white">lorem</p>
+					<p className="text-white">Faculdade</p>
 					<p className="text-white">Fone: (92) 9 4002-8922</p>
 				</div>
 
@@ -46,9 +46,9 @@ export const Footer: FC = () => {
 
 				{/* Campo de Inscrição */}
 				<div className="text-center lg:text-left space-y-2">
-					<h2 className="text-lg font-bold text-white">Lorem</h2>
+					<h2 className="text-lg font-bold text-white">Entre em contato</h2>
 					<div className="flex items-center space-x-2">
-						<Input type="text" placeholder="Lorem Lorem" className="bg-white" />
+						<Input type="text" placeholder="Escreva sua mensagem" className="bg-white" />
 						<button className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded transition-colors">
 							Enviar
 						</button>

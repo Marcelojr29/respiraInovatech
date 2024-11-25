@@ -21,9 +21,13 @@ const useApi = () => {
         registerUser: (name: string, email: string, password: string) =>
             api.post(API_ENDPOINTS.auth.register, { name, email, password }),
 
+        fetchReports: () => api.get(API_ENDPOINTS.reports.list),
+
+        fetchSensors: () => api.get(API_ENDPOINTS.maps.sensors)
+
         // logoutUser: () => api.post(API_ENDPOINTS.auth.logout),
 
-        fetchUsers: ()
+        // fetchUsers: ()
     };
 };
 

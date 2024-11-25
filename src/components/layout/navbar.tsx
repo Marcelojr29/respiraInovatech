@@ -38,9 +38,9 @@ export function Navbar() {
 	};
 
 	return (
-		<nav
+		<nav 
 			className={cn(
-				"fixed top-0 z-50 w-full py-3 transition-all duration-300",
+				"fixed top-0 z-50 w-full py-3 transition-all duration-300" ,
 				isScrolled ? "bg-opacity-90 shadow-lg" : "bg-opacity-100",
 				"bg-custom-gradient"
 			)}
@@ -56,22 +56,28 @@ export function Navbar() {
 				{/* Menu para Desktop */}
 				<div className="hidden lg:flex space-x-12 text-2xl font-semibold text-white">
 					<a
-						href="#Home"
+						href="/"
 						className="text-white hover:text-gray-200 transition-colors"
 					>
 						Home
 					</a>
 					<a
-						href="#About"
+						href="/dashboard"
 						className="text-white hover:text-gray-200 transition-colors"
 					>
-						About
+						Dashboard
 					</a>
-					<a
+					{/* <a
 						href="#Features"
 						className="text-white hover:text-gray-200 transition-colors"
 					>
 						Features
+					</a> */}
+					<a
+						href="/reports"
+						className="text-white hover:text-gray-200 transition-colors"
+					>
+						Reports
 					</a>
 					<Button
 						onClick={goToLogin}

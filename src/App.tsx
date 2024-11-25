@@ -19,20 +19,21 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
 
           {/* Rotas protegidas */}
+          
           <Route
             path="/dashboard"
             element={
-              <PrivateRoute>
+              // <PrivateRoute>
                 <Dashboard />
-              </PrivateRoute>
+              // </PrivateRoute>
             }
           />
           <Route
             path="/reports"
             element={
-              <PrivateRoute>
+              // <PrivateRoute>
                 <Reports />
-              </PrivateRoute>
+              // </PrivateRoute>
             }
           />
 

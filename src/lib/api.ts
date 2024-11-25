@@ -8,7 +8,7 @@ export const API_ENDPOINTS = {
         list: "/users",
     },
     maps: {
-        sensors: "/maps/sensors",
+        sensors: "/sensors",
         alerts: "/maps/alerts",
     },
     alerts: {
@@ -21,18 +21,23 @@ export const API_ENDPOINTS = {
 }
 
 export const loginUser = async (api: any, email: string, password: string) => {
-    const response = await api.post(API_ENDPOINTS.auth.login, { email, password });
+    const response = await api.loginUser(email, password);
     return response.data;
 };
 
 export const registerUser = async (api: any, name: string, email: string, password: string) => {
-    const response = await api.post(API_ENDPOINTS.auth.register, { name, email, password });
+    const response = await api.registerUser(name, email, password);
     return response.data;
 };
 
 
 export const fetchReports = async (api: any) => {
-    const response = await api.get(API_ENDPOINTS.reports);
+    const response = await api.fetchReports(API_ENDPOINTS.reports);
+    return response.data;
+};
+
+export const fetchSensor = async (api: any) => {
+    const response = await api.fetchSensors(API_ENDPOINTS.reports);
     return response.data;
 };
 

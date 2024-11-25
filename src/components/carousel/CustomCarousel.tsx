@@ -41,7 +41,7 @@ const CustomCarousel: React.FC = () => {
 				<div className="flex justify-center items-center h-[400px] w-full">
 					{" "}
 					{/* Ajuste de altura para remover espaço vazio */}
-					<MapSlide />
+					{/* <MapSlide /> */}
 				</div>
 				<div className="flex justify-center items-center h-[400px] w-full">
 					<ChartSlide />
