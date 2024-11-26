@@ -14,7 +14,7 @@ export function Navbar() {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const [showButton, setShowButton] = useState(false);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const navigate = useNavigate(); // Para navegação
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -27,14 +27,13 @@ export function Navbar() {
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
 
-	const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+	const navigateTo = (path: string) => {
+		navigate(path);
+		setIsMenuOpen(false); // Fecha o menu no mobile
+	};
 
 	const scrollToTop = () => {
 		window.scrollTo({ top: 0, behavior: "smooth" });
-	};
-
-	const goToLogin = () => {
-		navigate("/login"); // Redireciona para a página de login
 	};
 
 	return (
@@ -45,44 +44,47 @@ export function Navbar() {
 				"bg-custom-gradient"
 			)}
 		>
-			<div className="container px-4 mx-auto flex justify-between items-center">
+			<div className="container mx-auto px-4 flex justify-between items-center">
 				{/* Logo */}
 				<img
-					className="h-20 w-auto"
 					src="/src/assets/images/RESPIRA_Logo.png"
 					alt="Logo"
+					className="h-20 w-auto"
 				/>
 
-				{/* Menu para Desktop */}
+				{/* Desktop Menu */}
 				<div className="hidden lg:flex space-x-12 text-2xl font-semibold text-white">
-					<a
-						href="#Home"
-						className="text-white hover:text-gray-200 transition-colors"
+					<Button
+						onClick={() => navigateTo("/")}
+						className="hover:text-gray-200 transition-colors"
 					>
 						Home
-					</a>
-					<a
-						href="#About"
-						className="text-white hover:text-gray-200 transition-colors"
-					>
-						About
-					</a>
-					<a
-						href="#Features"
-						className="text-white hover:text-gray-200 transition-colors"
-					>
-						Features
-					</a>
+					</Button>
 					<Button
-						onClick={goToLogin}
+						onClick={() => navigateTo("/dashboard")}
+						className="hover:text-gray-200 transition-colors"
+					>
+						Dashboard
+					</Button>
+					<Button
+						onClick={() => navigateTo("/reports")}
+						className="hover:text-gray-200 transition-colors"
+					>
+						Reports
+					</Button>
+					<Button
+						onClick={() => navigateTo("/login")}
 						className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded transition-colors"
 					>
-						Login
+						Login (Opcional)
 					</Button>
 				</div>
 
-				{/* Menu Mobile */}
-				<DropdownMenu open={isMenuOpen} onOpenChange={toggleMenu}>
+				{/* Mobile Menu */}
+				<DropdownMenu
+					open={isMenuOpen}
+					onOpenChange={() => setIsMenuOpen(!isMenuOpen)}
+				>
 					<DropdownMenuTrigger asChild>
 						<Button variant="ghost" className="lg:hidden text-white">
 							<svg
@@ -105,45 +107,23 @@ export function Navbar() {
 						align="end"
 						className="bg-custom-gradient text-white p-5 space-y-3"
 					>
-						<DropdownMenuItem onSelect={() => setIsMenuOpen(false)}>
-							<a
-								href="#Home"
-								className="block text-white hover:text-gray-200 transition-colors"
-							>
-								Home
-							</a>
+						<DropdownMenuItem onSelect={() => navigateTo("/")}>
+							Home
 						</DropdownMenuItem>
-						<DropdownMenuItem onSelect={() => setIsMenuOpen(false)}>
-							<a
-								href="#About"
-								className="block text-white hover:text-gray-200 transition-colors"
-							>
-								About
-							</a>
+						<DropdownMenuItem onSelect={() => navigateTo("/dashboard")}>
+							Dashboard
 						</DropdownMenuItem>
-						<DropdownMenuItem onSelect={() => setIsMenuOpen(false)}>
-							<a
-								href="#Contact"
-								className="block text-white hover:text-gray-200 transition-colors"
-							>
-								Contact
-							</a>
+						<DropdownMenuItem onSelect={() => navigateTo("/reports")}>
+							Reports
 						</DropdownMenuItem>
-						<DropdownMenuItem
-							onSelect={() => {
-								setIsMenuOpen(false);
-								goToLogin();
-							}}
-						>
-							<span className="block text-white hover:text-gray-200 transition-colors">
-								Login
-							</span>
+						<DropdownMenuItem onSelect={() => navigateTo("/login")}>
+							Login (Opcional)
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</div>
 
-			{/* Botão de voltar ao topo */}
+			{/* Scroll to Top Button */}
 			{showButton && (
 				<Button
 					onClick={scrollToTop}

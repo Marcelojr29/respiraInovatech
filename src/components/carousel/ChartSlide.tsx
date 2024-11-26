@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import "chart.js/auto";
-import { useChartApi } from "@/hooks/useGraphic";
 
 interface ChartData {
 	labels: string[];
@@ -17,13 +16,12 @@ interface ChartData {
 }
 
 const ChartSlide: React.FC = () => {
-	const { getCO2Levels } = useChartApi();
 	const [chartData, setChartData] = useState<ChartData>({
-		labels: [],
+		labels: ["10:00", "10:02", "10:04", "10:06", "10:08"],
 		datasets: [
 			{
 				label: "Variação de CO₂ em Manaus (ppm)",
-				data: [],
+				data: [350, 400, 450, 500, 550],
 				fill: true,
 				borderColor: "rgba(75, 192, 192, 1)",
 				pointBackgroundColor: "rgba(75, 192, 192, 1)",
@@ -33,10 +31,10 @@ const ChartSlide: React.FC = () => {
 		],
 	});
 
-	const updateChartData = async () => {
-		try {
-			const response = await getCO2Levels();
-			const newCO2Level = response.data[0]?.measurements[0]?.value || 0;
+	useEffect(() => {
+		// Simula a atualização dos dados de CO₂
+		const intervalId = setInterval(() => {
+			const newCO2Level = Math.floor(Math.random() * (1200 - 300 + 1)) + 300;
 			const currentTimeLabel = new Date().toLocaleTimeString();
 
 			setChartData((prevData) => {
@@ -56,14 +54,7 @@ const ChartSlide: React.FC = () => {
 					],
 				};
 			});
-		} catch (error) {
-			console.error("Erro ao buscar dados de CO₂:", error);
-		}
-	};
-
-	useEffect(() => {
-		const intervalId = setInterval(updateChartData, 120000);
-		updateChartData();
+		}, 5000); // Atualiza os dados a cada 5 segundos
 
 		return () => clearInterval(intervalId);
 	}, []);
@@ -74,16 +65,21 @@ const ChartSlide: React.FC = () => {
 		plugins: {
 			legend: {
 				labels: {
-					color: "#333",
+					color: "#4B5563", // Cinza escuro
 					font: {
 						size: 14,
+						weight: "bold" as "bold", // Corrigido com tipo explícito
 					},
 				},
+				position: "top" as "top", // Define explicitamente como "top"
 			},
 			tooltip: {
-				backgroundColor: "rgba(0, 0, 0, 0.7)",
-				titleColor: "#fff",
-				bodyColor: "#fff",
+				backgroundColor: "rgba(0, 0, 0, 0.8)",
+				titleColor: "#FFFFFF",
+				bodyColor: "#F3F4F6",
+				cornerRadius: 8,
+				borderColor: "#9CA3AF",
+				borderWidth: 1,
 			},
 		},
 		scales: {
@@ -91,7 +87,7 @@ const ChartSlide: React.FC = () => {
 				beginAtZero: true,
 				grace: "10%",
 				ticks: {
-					color: "#333",
+					color: "#4B5563",
 					font: {
 						size: 12,
 					},
@@ -109,29 +105,39 @@ const ChartSlide: React.FC = () => {
 					},
 				},
 				grid: {
-					color: "#e0e0e0",
+					color: "#E5E7EB",
 				},
 			},
 			x: {
 				ticks: {
-					color: "#333",
+					color: "#4B5563",
 					font: {
 						size: 12,
 					},
 				},
 				grid: {
-					color: "#e0e0e0",
+					color: "#E5E7EB",
 				},
 			},
 		},
 	};
 
 	return (
-		<div className="w-full h-full p-4 bg-white rounded-lg shadow-lg">
-			<h2 className="text-xl font-semibold text-gray-700 mb-4">
-				Medição de CO₂ em Manaus
-			</h2>
-			<Line data={chartData} options={chartOptions} className="w-full h-full" />
+		<div className="w-full h-full p-6 bg-gray-200 rounded-lg shadow-xl">
+			{/* Header */}
+			<div className="mb-6">
+				<h2 className="text-2xl font-bold text-gray-800 border-l-4 border-blue-500 pl-4">
+					Medição de CO₂ em Manaus
+				</h2>
+				<p className="text-sm text-gray-600 mt-2">
+					Monitoramento em tempo real do nível de CO₂ na região.
+				</p>
+			</div>
+
+			{/* Gráfico */}
+			<div className="w-full h-[350px] bg-white rounded-lg shadow-lg p-4">
+				<Line data={chartData} options={chartOptions} />
+			</div>
 		</div>
 	);
 };
