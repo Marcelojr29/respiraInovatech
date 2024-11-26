@@ -64,8 +64,8 @@ const Reports: React.FC = () => {
 				{
 					label: "Número de Queimadas",
 					data: chartValues,
-					backgroundColor: "rgba(255, 99, 132, 0.5)",
-					borderColor: "rgba(255, 99, 132, 1)",
+					backgroundColor: "rgba(75, 192, 192, 0.5)",
+					borderColor: "rgba(75, 192, 192, 1)",
 					borderWidth: 1,
 				},
 			],
@@ -80,6 +80,10 @@ const Reports: React.FC = () => {
 		return () => clearInterval(intervalId);
 	}, []);
 
+	const handleLogout = () => {
+		navigate("/login");
+	};
+
 	return (
 		<div className="p-8 bg-gradient-custom min-h-screen flex flex-col">
 			<h1 className="text-center text-4xl font-extrabold text-black mb-8">
@@ -87,8 +91,9 @@ const Reports: React.FC = () => {
 			</h1>
 
 			<div className="flex flex-col lg:flex-row gap-8">
+				{/* Gráfico */}
 				<div className="flex-1 bg-white p-6 rounded-lg shadow-xl">
-					<h2 className="text-2xl font-semibold text-gray-800 mb-4">
+					<h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
 						Queimadas por Localidade
 					</h2>
 					{chartData ? (
@@ -98,28 +103,35 @@ const Reports: React.FC = () => {
 					)}
 				</div>
 
-				<div className="flex-1 bg-white p-6 rounded-lg shadow-xl">
-					<h2 className="text-2xl font-semibold text-gray-800 mb-4">
+				{/* Tabela */}
+				<div className="flex-1 bg-white p-8 rounded-lg shadow-lg flex flex-col justify-between">
+					<h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
 						Dados de Queimadas
 					</h2>
-					<div className="overflow-x-auto">
-						<table className="w-full border  border-gray-300 text-sm text-gray-700">
+					<div className="overflow-x-auto flex-1">
+						<table className="w-full border border-gray-300 text-sm text-gray-700 rounded-lg">
 							<thead>
-								<tr className="bg-gray-100 text-gray-700 text-left">
-									<th className="px-4 py-2 border-b">Data</th>
-									<th className="px-4 py-2 border-b">Localização</th>
-									<th className="px-4 py-2 border-b">Número de Incidentes</th>
+								<tr className="bg-gray-200 text-gray-700 text-left">
+									<th className="px-6 py-4 border-b text-center font-semibold">
+										Data
+									</th>
+									<th className="px-6 py-4 border-b text-center font-semibold">
+										Localização
+									</th>
+									<th className="px-6 py-4 border-b text-center font-semibold">
+										Incidentes
+									</th>
 								</tr>
 							</thead>
 							<tbody>
 								{reports.map((report, index) => (
 									<tr
 										key={index}
-										className="hover:bg-gray-50 transition-colors"
+										className="hover:bg-green-50 transition-colors text-center"
 									>
-										<td className="px-4 py-2 border-b">{report.date}</td>
-										<td className="px-4 py-2 border-b">{report.location}</td>
-										<td className="px-4 py-2 border-b text-red-500 font-bold">
+										<td className="px-6 py-4 border-b">{report.date}</td>
+										<td className="px-6 py-4 border-b">{report.location}</td>
+										<td className="px-6 py-4 border-b text-red-500 font-bold">
 											{report.incidents}
 										</td>
 									</tr>
@@ -130,7 +142,7 @@ const Reports: React.FC = () => {
 				</div>
 			</div>
 
-			{/* Botões de navegação */}
+			{/* Botões */}
 			<div className="mt-10 flex justify-center space-x-4">
 				<button
 					onClick={() => navigate("/")}
@@ -139,7 +151,7 @@ const Reports: React.FC = () => {
 					Voltar para Home
 				</button>
 				<button
-					onClick={() => console.log("Logout chamado")}
+					onClick={handleLogout}
 					className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg shadow-md text-lg font-semibold transform hover:scale-105 transition duration-300"
 				>
 					Logout

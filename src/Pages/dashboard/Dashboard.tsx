@@ -36,10 +36,15 @@ const Dashboard: React.FC = () => {
 		return () => clearInterval(intervalId);
 	}, []);
 
+	const handleLogout = () => {
+		navigate("/login");
+	};
+
 	return (
-		<div className="p-8 bg-custom-color min-h-screen flex flex-col items-center">
-			<div className="text-center mb-10">
-				<h1 className="text-4xl font-bold text-gray-800 mb-4">
+		<div className="p-8 bg-custom-color min-h-screen flex flex-col items-center justify-center">
+			{/* Boas-vindas */}
+			<div className="text-center mb-6">
+				<h1 className="text-4xl font-bold text-gray-800 mb-2">
 					Bem-vindo, {user.name}!
 				</h1>
 				<p className="text-lg text-gray-700">
@@ -47,7 +52,8 @@ const Dashboard: React.FC = () => {
 				</p>
 			</div>
 
-			<div className="flex justify-center items-center space-x-6 mb-10">
+			{/* Cards de Informações */}
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-6xl">
 				<div className="bg-white p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition duration-300">
 					<FaFireAlt className="text-red-500 text-4xl mx-auto mb-4" />
 					<h2 className="text-xl font-semibold text-gray-700">
@@ -86,14 +92,16 @@ const Dashboard: React.FC = () => {
 				</div>
 			</div>
 
-			<div className="w-full max-w-2xl bg-gray-100 p-6 rounded-lg shadow-md text-center">
+			{/* Última Atualização */}
+			<div className="w-full max-w-6xl bg-gray-100 p-6 rounded-lg shadow-md text-center my-6">
 				<h2 className="text-lg font-semibold text-gray-700">
 					Última Atualização
 				</h2>
 				<p className="text-md text-gray-600">{mockData.lastUpdate}</p>
 			</div>
 
-			<div className="mt-10 flex justify-center space-x-4">
+			{/* Botões */}
+			<div className="flex justify-center space-x-4 mt-6">
 				<button
 					onClick={() => navigate("/")}
 					className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-md text-lg font-semibold transform hover:scale-105 transition duration-300"
@@ -101,7 +109,7 @@ const Dashboard: React.FC = () => {
 					Voltar para Home
 				</button>
 				<button
-					onClick={() => console.log("Logout chamado")}
+					onClick={handleLogout}
 					className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg shadow-md text-lg font-semibold transform hover:scale-105 transition duration-300"
 				>
 					Logout

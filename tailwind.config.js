@@ -17,6 +17,10 @@ export default {
 				sm: "calc(var(--radius) - 4px)",
 			},
 			colors: {
+				// Aqui você adiciona a cor personalizada
+				"custom-green": "rgb(208, 242, 199)",
+
+				// Manter as cores já existentes
 				background: "hsl(var(--background))",
 				foreground: "hsl(var(--foreground))",
 				card: {

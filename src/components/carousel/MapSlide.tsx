@@ -3,7 +3,6 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Coordenadas do centro do mapa
 const MAP_CENTER_COORDINATES: LatLngExpression = [
 	-3.0974099776093005, -60.02330371104108,
 ];
@@ -59,7 +58,7 @@ const touristPoints = [
 	},
 ];
 
-// Componente Marker Memoizado
+// Componente Marker 
 const MemoizedMarker = React.memo(
 	({
 		position,

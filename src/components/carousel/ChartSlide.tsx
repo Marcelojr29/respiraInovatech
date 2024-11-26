@@ -54,7 +54,7 @@ const ChartSlide: React.FC = () => {
 					],
 				};
 			});
-		}, 5000); // Atualiza os dados a cada 5 segundos
+		}, 5000); 
 
 		return () => clearInterval(intervalId);
 	}, []);
@@ -65,13 +65,13 @@ const ChartSlide: React.FC = () => {
 		plugins: {
 			legend: {
 				labels: {
-					color: "#4B5563", // Cinza escuro
+					color: "#4B5563", 
 					font: {
 						size: 14,
-						weight: "bold" as "bold", // Corrigido com tipo explícito
+						weight: "bold" as "bold", 
 					},
 				},
-				position: "top" as "top", // Define explicitamente como "top"
+				position: "top" as "top", 
 			},
 			tooltip: {
 				backgroundColor: "rgba(0, 0, 0, 0.8)",

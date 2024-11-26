@@ -8,7 +8,6 @@ interface Alert {
 }
 
 const AlertSlide: React.FC = () => {
-	// Mock de pontos turísticos com alertas simulados
 	const mockAlerts: Alert[] = [
 		{
 			id: 1,
@@ -69,7 +68,6 @@ const AlertSlide: React.FC = () => {
 
 		fetchAlerts();
 
-		// Atualiza os alertas a cada 10 segundos
 		const intervalId = setInterval(fetchAlerts, 10000);
 
 		return () => clearInterval(intervalId);

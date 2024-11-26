@@ -29,7 +29,7 @@ export function Navbar() {
 
 	const navigateTo = (path: string) => {
 		navigate(path);
-		setIsMenuOpen(false); // Fecha o menu no mobile
+		setIsMenuOpen(false); 
 	};
 
 	const scrollToTop = () => {
@@ -76,7 +76,7 @@ export function Navbar() {
 						onClick={() => navigateTo("/login")}
 						className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-4 py-2 rounded transition-colors"
 					>
-						Login (Opcional)
+						Login/Register
 					</Button>
 				</div>
 
@@ -117,7 +117,7 @@ export function Navbar() {
 							Reports
 						</DropdownMenuItem>
 						<DropdownMenuItem onSelect={() => navigateTo("/login")}>
-							Login (Opcional)
+							Login/Register
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
@@ -127,7 +127,7 @@ export function Navbar() {
 			{showButton && (
 				<Button
 					onClick={scrollToTop}
-					className="fixed bottom-5 right-5 bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-all"
+					className="fixed bottom-5 right-5 bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-700 transition-all"
 				>
 					<ChevronUp className="w-6 h-6" />
 				</Button>

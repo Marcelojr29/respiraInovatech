@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 const LoginComponent: React.FC = () => {
 	const [isRegister, setIsRegister] = useState<boolean>(false);
@@ -7,8 +7,7 @@ const LoginComponent: React.FC = () => {
 	const [name, setName] = useState<string>("");
 	const [message, setMessage] = useState<string>("");
 
-	// Mock para validação de login
-	const mockUser = { email: "user@test.com", password: "123456" };
+	const mockUser = { email: "user@test.com", password: "12345" };
 
 	const toggleForm = () => setIsRegister((prev) => !prev);
 
@@ -16,14 +15,12 @@ const LoginComponent: React.FC = () => {
 		event.preventDefault();
 
 		if (isRegister) {
-			// Mock de registro
 			if (email && password && name) {
 				setMessage("Registro realizado com sucesso!");
 			} else {
 				setMessage("Preencha todos os campos!");
 			}
 		} else {
-			// Mock de login
 			if (email === mockUser.email && password === mockUser.password) {
 				setMessage("Login bem-sucedido!");
 				localStorage.setItem("token", "mock-token");
@@ -35,12 +32,19 @@ const LoginComponent: React.FC = () => {
 	};
 
 	return (
-		<div className="flex justify-center items-center min-h-screen bg-[rgb(217, 248, 217)]">
+		<div className="flex flex-col justify-center items-center min-h-screen bg-custom-green">
+			{/* Logo fora do formulário */}
+			<img
+				src="/src/assets/images/RESPIRA_Logo.png"
+				alt="Logo do Projeto"
+				className="h-32 w-auto mb-8"
+			/>
+
 			<div
 				className="relative bg-white rounded-lg shadow-lg p-6"
 				style={{ perspective: "1000px" }}
 			>
-				<h2 className="text-3xl font-bold text-center text-gray-800 mb-6 mt-4">
+				<h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
 					{isRegister ? "Sign up" : "Log in"}
 				</h2>
 
@@ -60,14 +64,10 @@ const LoginComponent: React.FC = () => {
 						></span>
 					</label>
 					<div className="relative text-lg font-semibold text-gray-700">
-						<span
-							className={`absolute -left-20 ${!isRegister ? "underline" : ""}`}
-						>
+						<span className={`absolute -left-20 ${!isRegister ? "" : ""}`}>
 							Log in
 						</span>
-						<span
-							className={`absolute -right-20 ${isRegister ? "underline" : ""}`}
-						>
+						<span className={`absolute -right-20 ${isRegister ? "" : ""}`}>
 							Sign up
 						</span>
 					</div>
